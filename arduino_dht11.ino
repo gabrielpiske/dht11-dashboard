@@ -1,11 +1,12 @@
 /*
   =============================================================================
-  PROJETO: Dashboard Educativo DHT11 (SENAI - Eletrônica & IoT)
+  PROJETO: Dashboard Educativo DHT11 (Eletrônica & IoT)
+  DESENVOLVEDOR: Gabriel Piske (https://piske.online)
   OBJETIVO: Leitura do sensor de temperatura e umidade DHT11 e envio via Serial
             no padrão reconhecido pelo Dashboard Web Serial.
   
   FORMATO SERIAL DE SAÍDA:
-  "Umidade: 15.40 % | Temperatura: 1.00 ºC"
+  "Umidade: 99.00 % Temperatura: 23.70 °C" (também aceita com '|')
 
   CONEXÕES:
   - VCC: 5V ou 3.3V do Arduino

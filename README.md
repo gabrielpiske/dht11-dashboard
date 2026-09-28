@@ -93,5 +93,11 @@ dht11-dashboard/
 └── README.md           # Documentação técnica e pedagógica
 ```
 
+## 👨‍💻 Desenvolvedor & Créditos
+Projeto concebido e desenvolvido por **Gabriel Piske**.
+
+- **Portfólio & Projetos:** [piske.online](https://piske.online)
+- **GitHub:** [@gabrielpiske](https://github.com/gabrielpiske)
+
 ---
-*Desenvolvido para apoio às aulas de Eletrônica, Automação e Internet das Coisas (IoT).*
+*Plataforma didática desenvolvida para apoio às aulas de Eletrônica, Automação e Internet das Coisas (IoT).*
