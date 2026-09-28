@@ -285,22 +285,23 @@
             </div>
           </div>
 
-          <!-- Janela do Terminal -->
-          <div class="terminal-body" id="terminalWindow">
-            <div class="terminal-welcome">
-              <span class="cmd-prompt">> Pronto para escuta serial.</span><br>
-              <span class="cmd-comment">// Formato esperado do Arduino:</span><br>
-              <span class="cmd-highlight">Umidade: XX.XX % | Temperatura: YY.YY ºC</span><br>
-              <span class="cmd-info">// Dica: Conecte o cabo USB do Arduino e clique em "Conectar Porta COM".</span>
+            <!-- Janela do Terminal -->
+            <div class="terminal-body" id="terminalWindow">
+              <div class="terminal-welcome">
+                <span class="cmd-prompt">> Pronto para escuta serial.</span><br>
+                <span class="cmd-comment">// Formatos aceitos do Arduino:</span><br>
+                <span class="cmd-highlight">Umidade: 99.00 % Temperatura: 23.70 °C</span><br>
+                <span class="cmd-highlight">Umidade: 15.40 % | Temperatura: 1.00 ºC</span><br>
+                <span class="cmd-info">// Conecte o Arduino e clique em "Conectar Porta COM".</span>
+              </div>
             </div>
-          </div>
 
-          <div class="terminal-footer">
-            <span class="rx-status">
-              <span class="rx-led" id="rxLed"></span> RX (Recebendo)
-            </span>
-            <span class="raw-format-hint">Padrão: <code>Umidade: % | Temperatura: ºC</code></span>
-          </div>
+            <div class="terminal-footer">
+              <span class="rx-status">
+                <span class="rx-led" id="rxLed"></span> RX (Recebendo)
+              </span>
+              <span class="raw-format-hint">Padrão: <code>Umidade: % Temperatura: °C</code></span>
+            </div>
         </div>
 
       </section>
@@ -442,12 +443,12 @@ void loop() {
     return;
   }
 
-  // Transmissão serial no formato exato esperado pelo Dashboard
+  // Transmissão serial (com ou sem '|' o dashboard reconhece automaticamente)
   Serial.print(F("Umidade: "));
   Serial.print(umidade, 2);
-  Serial.print(F(" % | Temperatura: "));
+  Serial.print(F(" % Temperatura: "));
   Serial.print(temperatura, 2);
-  Serial.println(F(" ºC"));
+  Serial.println(F(" °C"));
 }
 </code></pre>
             </div>

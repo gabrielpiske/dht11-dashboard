@@ -52,11 +52,11 @@ void loop() {
     return;
   }
 
-  // Envio serial no formato rigorosamente esperado pelo Dashboard Web:
-  // "Umidade: 15.40 % | Temperatura: 1.00 ºC"
+  // Envio serial no formato do Dashboard:
+  // "Umidade: 99.00 % Temperatura: 23.70 °C" (também aceita com '|')
   Serial.print(F("Umidade: "));
   Serial.print(umidade, 2);
-  Serial.print(F(" % | Temperatura: "));
+  Serial.print(F(" % Temperatura: "));
   Serial.print(temperatura, 2);
-  Serial.println(F(" ºC"));
+  Serial.println(F(" °C"));
 }

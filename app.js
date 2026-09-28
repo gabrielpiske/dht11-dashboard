@@ -330,19 +330,33 @@ async function disconnectSerial() {
  * "Umidade: 15.40 % | Temperatura: 1.00 ºC"
  */
 function handleIncomingLine(rawLine) {
-  // Regex flexível para umidade e temperatura (aceita variações de espaçamento, ºC e °C, vírgula ou ponto)
-  const regex = /Umidade:\s*([\d.,]+)\s*%\s*\|\s*Temperatura:\s*([+-]?[\d.,]+)\s*[º°]C/i;
-  const match = rawLine.match(regex);
+  // Parser flexível e resiliente para o formato do Arduino dos alunos:
+  // Aceita: "Umidade: 99.00 % Temperatura: 23.70 °C" (sem o pipe '|')
+  // Aceita: "Umidade: 15.40 % | Temperatura: 1.00 ºC" (com o pipe '|')
+  // Aceita também ordem invertida, vírgulas decimais e diferentes símbolos de grau (°C ou ºC)
+  let hum = null;
+  let temp = null;
 
-  if (match) {
-    const hum = parseFloat(match[1].replace(',', '.'));
-    const temp = parseFloat(match[2].replace(',', '.'));
+  const humMatch = rawLine.match(/(?:Umidade|Umid|Humidity)\s*[:=]?\s*([0-9]+(?:[.,][0-9]+)?)/i);
+  const tempMatch = rawLine.match(/(?:Temperatura|Temp|Temperature)\s*[:=]?\s*([+-]?[0-9]+(?:[.,][0-9]+)?)/i);
 
-    if (!isNaN(hum) && !isNaN(temp)) {
-      logTerminal(rawLine, 'parsed');
-      processSensorData(temp, hum);
-      return;
+  if (humMatch && tempMatch) {
+    hum = parseFloat(humMatch[1].replace(',', '.'));
+    temp = parseFloat(tempMatch[1].replace(',', '.'));
+  } else {
+    // Fallback: regex combinada com separador opcional (| ou hífen ou vírgula ou espaço)
+    const combinedRegex = /Umidade:\s*([\d.,]+)\s*%?\s*(?:\||-|,)?\s*Temperatura:\s*([+-]?[\d.,]+)\s*[º°]?C?/i;
+    const match = rawLine.match(combinedRegex);
+    if (match) {
+      hum = parseFloat(match[1].replace(',', '.'));
+      temp = parseFloat(match[2].replace(',', '.'));
     }
+  }
+
+  if (hum !== null && temp !== null && !isNaN(hum) && !isNaN(temp)) {
+    logTerminal(rawLine, 'parsed');
+    processSensorData(temp, hum);
+    return;
   }
 
   // Linha recebida que não combina com o padrão esperado (ex: mensagens de inicialização do Arduino)
